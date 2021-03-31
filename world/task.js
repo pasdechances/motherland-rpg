@@ -2,19 +2,18 @@ const Discord = require('discord.js');
 const delay = require('delay');
 
 class TaskTimer{
-    constructor(task, dayDuration) {
+    constructor(task, hourDuration) {
         this.count = 0; 
         this.name = task.name;
         this.duration = task.duration;
-        this.dayDuration = dayDuration;
+        this.hourDuration = hourDuration;
     }
 
     async start(data,callback){
         while(this.count < this.duration)
         {
             ++ this.count;
-            console.log(this.count + ' ' + this.duration)
-            await delay(this.dayDuration)
+            await delay(this.hourDuration)
         }
         return callback(data);
     }
@@ -26,7 +25,15 @@ class TaskTimer{
             .setColor('#0099ff')
             .setTitle("Camarade " + author.username, author.displayAvatarURL())
             .addFields(
-                { name: this.name, value: 'fin de tache dans `'+ this.countDown() +'` jour(s)'},
+                { name: this.name, value: 'fin de tache dans `'+ this.countDown() +'` heure(s)'},
+            );
+    }
+
+    time(){
+        return new Discord.MessageEmbed()
+            .setColor('#0099ff')
+            .addFields(
+                { name: this.name, value: 'fin de tache dans `'+ this.countDown() +'` heure(s)'},
             );
     }
 }

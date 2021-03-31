@@ -6,19 +6,19 @@ class Inventory{
     }
 
     find(item){
-        return this.inventory.find(inventoryItem => inventoryItem.name == item);
+        return this.inventory.find(inventoryItem => inventoryItem.name == item.name);
     }
 
     addItems(items){
         if(this.inventory.length >= this.size) return null;
         items.forEach(item => {
-            if(this.inventory.type && this.inventory.type !== item.type) return [item];
+            if(this.type && this.type !== item.type) return [item];
             var inventoryItem = this.find(item)
             if(inventoryItem){
-                inventoryItem.quantity += item.quantity
+                this.find(item).quantity += item.quantity
             }
             else{
-                this.inventory.concat(item);
+                this.inventory.push(item);
             }
         });
         return items;
@@ -43,8 +43,12 @@ class Inventory{
         this.inventory = this.inventory.filter(inventoryItem => inventoryItem.name !== item.name)
     }
 
-    displayInventory(){
-        return 0;
+    display(){
+        var string = "";
+        this.inventory.forEach(item => {
+            string += item.name +" : "+item.quantity + "\n"
+        });
+        return string;
     }
 }
 

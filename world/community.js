@@ -1,4 +1,5 @@
 const fs = require('fs');
+const Discord = require('discord.js');
 const filePath = "data/Players.json";
 
 const Player = require('./player.js');
@@ -13,14 +14,18 @@ class Community {
         this.houses = new Inventory(0,'house');
     }
 
-    addUser(id){
-        var playerSaved = this.load(id);
-        var player = new Player(id);
+    addUser(user){
+        var playerSaved = this.load(user.id);
+        var player = new Player(user);
         if(playerSaved)player = playerSaved;
         player.init();
         this.players.push(player);
         ++ this.playerAlive;
         ++ this.houses.size;
+        return new Discord.MessageEmbed()
+            .setColor('#0099ff')
+            .setAuthor("Camarade " + user.username, user.displayAvatarURL())
+            .setTitle('Au travail camarade !');
         //this.save(); //pour eviter les conflicts interserveur 1 vie pour tout les serveur
     }
 
@@ -51,8 +56,7 @@ class Community {
         savedPlayers.forEach(savedPlayer => {
             if(savedPlayer.id === id)player = savedPlayer
         });
-        if (player) return player;
-        else return null;
+        return player ? player : null;
     }
 
     lvlUpAlive(){

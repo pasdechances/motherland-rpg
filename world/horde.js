@@ -11,6 +11,10 @@ class Horde{
         this.setHordeCount();
     }
 
+    random(min, max){
+        return Math.round(Math.random() * (max - min) + min);
+    }
+
     setHordeCount(){
         this.count = this.random(this.minDay,this.maxDay);
     }
@@ -26,14 +30,15 @@ class Horde{
         return 0;
     }
 
-    random(min, max){
-        return Math.round(Math.random() * (max - min) + min);
+    embedInfoRush(){
+        return new Discord.MessageEmbed().setColor('#0099ff')
+            .setTitle('La horde attaquera ce soir !!');
     }
 
-    embedInfoRush(){
-        var embed = new Discord.MessageEmbed();
-        return embed.setColor('#0099ff')
-            .setTitle('La horde attaquera ce soir !!')    
+    embedRush(){
+        return new Discord.MessageEmbed().setColor('#0099ff')
+            .setTitle('La horde attaque !!') 
+            .description("test");  
     }
 }
 
