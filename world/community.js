@@ -24,7 +24,7 @@ class Community {
         ++ this.houses.size;
         return new Discord.MessageEmbed()
             .setColor('#0099ff')
-            .setAuthor("Camarade " + user.username, user.displayAvatarURL())
+            .setAuthor(player.name, player.avatar)
             .setTitle('Au travail camarade !');
         //this.save(); //pour eviter les conflicts interserveur 1 vie pour tout les serveur
     }
@@ -69,6 +69,19 @@ class Community {
             if(player.id === id)playerSearched = player;
         });
         return playerSearched;
+    }
+
+    display(){
+        this.inventory.display()
+        this.houses.display()
+    }
+
+    stock(){
+        return 0;
+    }
+
+    destock(){
+        return 0;
     }
 }
 

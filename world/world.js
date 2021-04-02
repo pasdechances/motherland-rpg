@@ -4,7 +4,6 @@ const delay = require('delay');
 const Community = require('./community.js');
 const Commandes = require('./commandes.js');
 const Monster = require('./monster.js');
-//const TaskTimer = require('./task.js');
 const Horde = require('./horde.js');
 const Items = require('./items.js');
 const Moon = require('./moon.js');
@@ -140,20 +139,23 @@ class World {
         if(tmpPlayer.alive){
             if(msg[1] === "help" || msg[1] === "h") return this.broadcast(this.cmd.main());
             else if(msg[1] === "profile" || msg[1] === "p") return this.broadcast(this.community.findPlayerById(author.id).display());
-            else if(msg[1] === "inventory" || msg[1] === "i") return this.broadcast(this.community.findPlayerById(author.id).inventory.display());
-            else if(msg[1] === "community-inventory" || msg[1] === "ci") return this.broadcast(this.community.inventory.display());
-            else if(msg[1] === "community" || msg[1] === "c") return this.broadcast(this.community().displayCommunity());
+            else if(msg[1] === "inventory" || msg[1] === "i") return this.broadcast(this.community.findPlayerById(author.id).inventory.displayEmbed());
             else if(msg[1] === "time" || msg[1] === "t") return this.time();
-            else if(msg[1] === "harvest" || msg[1] === "craft" || msg[1] === "raid"){
-                if (tmpPlayer.occuped) return this.broadcast(tmpPlayer.task.time(author));
-                else if(msg[1] === "craft") return 0 //
-                else if(msg[1] === "raid") return 0 //
-                else if(msg[1] === "harvest") return this.broadcast(this.community.findPlayerById(author.id).beginHarvest(msg[2],this))//return this.beginHarvest(author, msg[2]) //
-            }
-            else if(msg[1] === "build") return 0 //
-            else if(msg[1] === "stock") return 0 //
-            else if(msg[1] === "destock") return 0 //
             else if(msg[1] === "task") return this.broadcast(tmpPlayer.task.time(author));
+            else if(!tmpPlayer.out){
+                if(msg[1] === "community-inventory" || msg[1] === "ci") return this.broadcast(this.community.inventory.display());
+                else if(msg[1] === "community" || msg[1] === "c") return this.broadcast(this.community().displayCommunity());
+                else if(msg[1] === "harvest" || msg[1] === "craft" || msg[1] === "raid"){
+                    if (tmpPlayer.occuped) return this.broadcast(tmpPlayer.task.time(author));
+                    else if(msg[1] === "craft") return 0 //
+                    else if(msg[1] === "raid") return this.broadcast(this.community.LaunchRaid(author.id)); //
+                    else if(msg[1] === "harvest") return this.broadcast(this.community.findPlayerById(author.id).beginHarvest(msg[2],this))//return this.beginHarvest(author, msg[2]) //
+                }
+                else if(msg[1] === "build") return this.broadcast(this.community.build(author.id)); //
+                else if(msg[1] === "stock") return this.broadcast(this.community.stock(author.id)); //
+                else if(msg[1] === "destock") return this.broadcast(this.community.destock(author.id)); //
+            }
+            
             //else if(msg[1] === "travel")return 0 //
         }
         else if(!tmpPlayer.alive){

@@ -1,3 +1,4 @@
+const Discord = require('discord.js');
 class Inventory{
     constructor(size, type = null){
         this.inventory = [];
@@ -49,6 +50,13 @@ class Inventory{
             string += item.name +" : "+item.quantity + "\n"
         });
         return string;
+    }
+
+    displayEmbed(){
+        return new Discord.MessageEmbed().setColor('#0099ff')
+            .setAuthor(this.name, this.avatar)
+            .setTitle("Voici ton inventaire")
+            .setDescription(this.display());
     }
 }
 

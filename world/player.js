@@ -53,11 +53,6 @@ class Palyer {
         this.currentLife = this.currentLife + (this.lvl * 2)
     }
 
-    eat(meal){
-        if (this.currentLife + meal.life > this.maxLife) this.currentLife = this.maxLife
-        else this.currentLife = this.currentLife + meal.life
-    }
-
     display(){
         return new Discord.MessageEmbed().setColor('#0099ff')
         .setAuthor(this.name, this.avatar)
@@ -79,19 +74,19 @@ class Palyer {
             { 
                 name: 'Tenue', 
                 value: 
-                    "veste : " + (this.jacket ? this.jacket : "Nope") +"\n\
-                    pantalon : " + this.trousers ? this.trousers : "none"  +"\n\
-                    chaussures : " + this.shoe ? this.shoe : "none"  +"\n\
-                    gant : " + this.glove ? this.glove : "none"  +"\n\
-                    chapeau : " + this.hat ? this.hat : "none" ,
+                    "veste : " + (this.jacket.inventory[0] ? this.jacket.inventory[0].name : "Nope") +"\n\
+                    pantalon : " + this.trousers.inventory[0] ? this.trousers.inventory[0].name : "none"  +"\n\
+                    chaussures : " + this.shoe.inventory[0] ? this.shoe.inventory[0].name : "none"  +"\n\
+                    gant : " + this.glove.inventory[0] ? this.glove.inventory[0].name : "none"  +"\n\
+                    chapeau : " + this.hat.inventory[0] ? this.hat.inventory[0].name : "none" ,
                 inline : true
             },
             { 
                 name: 'Equipement', 
                 value: 
-                    "bouclier : " + this.shield ? this.shield : "none"  +"\n\
-                    arme : " + this.weapon ? this.weapon : "none"  +"\n\
-                    outil : " + this.tool ? this.tool : "none" ,
+                    "bouclier : " + this.shield.inventory[0] ? this.shield.inventory[0].name : "none"  +"\n\
+                    arme : " + this.weapon.inventory[0] ? this.weapon.inventory[0].name : "none"  +"\n\
+                    outil : " + this.tool.inventory[0] ? this.tool.inventory[0].name : "none" ,
                 inline : true
             },
         )
@@ -127,6 +122,20 @@ class Palyer {
             .setDescription("")
         );
     }
+
+    equipe(){
+        return 0;
+    }
+    eat(meal){
+        if (this.currentLife + meal.life > this.maxLife) this.currentLife = this.maxLife
+        else this.currentLife = this.currentLife + meal.life
+    }
+    drink(meal){
+        if (this.currentLife + meal.life > this.maxLife) this.currentLife = this.maxLife
+        else this.currentLife = this.currentLife + meal.life
+    }
+
+
 }
 
 module.exports = Palyer
